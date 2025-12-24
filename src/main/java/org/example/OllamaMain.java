@@ -15,11 +15,9 @@ public class OllamaMain
     }
 
     interface PersonExtractor {
-        OpenAiMain.Person extractPersonFrom(String text);
-
         @SystemMessage("You are a people creator.")
         @UserMessage("Create a random person.")
-        OpenAiMain.Person createRandomPerson();
+        Person createRandomPerson();
     }
 
     record Result(String name) {}
@@ -66,8 +64,8 @@ public class OllamaMain
 
         System.out.println(result);
 
-        OpenAiMain.PersonExtractor personExtractor =
-                AiServices.create(OpenAiMain.PersonExtractor.class, model);
+        PersonExtractor personExtractor =
+                AiServices.create(PersonExtractor.class, model);
 
         var person = personExtractor.createRandomPerson();
 

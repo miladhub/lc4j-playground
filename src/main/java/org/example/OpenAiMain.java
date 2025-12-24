@@ -4,20 +4,13 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
 import dev.langchain4j.service.AiServices;
-import dev.langchain4j.service.SystemMessage;
-import dev.langchain4j.service.UserMessage;
 
 public class OpenAiMain
 {
-    record Person(String name, int age, double height, boolean married) {
-    }
+    record Person(String name, int age, double height, boolean married) {}
 
     interface PersonExtractor {
         Person extractPersonFrom(String text);
-
-        @SystemMessage("You are a people creator.")
-        @UserMessage("Create a random person.")
-        Person createRandomPerson();
     }
 
     public static void main(String[] args) {
@@ -31,7 +24,8 @@ public class OpenAiMain
                         .logResponses(true)
                         .build();
 
-        PersonExtractor personExtractor = AiServices.create(PersonExtractor.class, model);
+        PersonExtractor personExtractor =
+                AiServices.create(PersonExtractor.class, model);
 
         String text = """
         John is 42 years old and lives an independent life.
